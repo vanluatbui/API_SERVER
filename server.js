@@ -1,10 +1,21 @@
-var express = require('express')
-var path = require('path')
-var serveStatic = require('serve-static')
+const express = require('express')
+const app = express()
+const bodyParser = require('body-parser')
+//require('dotenv').load()
+const port = process.env.PORT || 3000
 
-var app = express()
-app.use(serveStatic(path.join(__dirname, 'dist')))
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json())
 
-var port = process.env.PORT || 8000
+let routes = require('./api/routes') //importing route
+routes(app)
+
+app.use(function(req, res) {
+    res.status(404).send({url: req.originalUrl + ' not found'})
+})
+
 app.listen(port)
-console.log('server started ' + port)
+
+console.log('RESTful API server started on: ' + port)
+
+
