@@ -16,6 +16,4 @@ app.use(function(req, res) {
 
 app.listen(port)
 
-if (err) console.error(err)
-
 console.log('RESTful API server started on: ' + port)
